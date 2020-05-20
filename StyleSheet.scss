@@ -186,10 +186,12 @@ a{
 }
 
 .active {
+	padding-top: 5rem;
 	opacity:0;
 }
 
 .active:hover {
+	padding-top: 5rem;
 	opacity: 100;
 }
 .static {
