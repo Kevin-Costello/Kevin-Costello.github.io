@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Kevin Costello</title>
+    <link rel="stylesheet" href="StyleSheet.css">
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script> -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js"></script>
+    <script src="Scripts/FlockSketch.js"></script>
+    <script src="Scripts/Boid.js"></script>
+   
+</head>
+<body>
+    
+    <div id="app3">
+        <div class="row2" id="rowcontent">
+            <div class="column3" id="textcontent">
+                
+                <br><br><br><br> 
+                <h1 class="head">Flock Simulation</h1>
+                <span class="sub">P5 Javascript</span></br>
+                <br><br>
+                <span id="description"> An implementation of Craig Reynold's Boids to simulate the appearance of flocking birds or fish. <br><br> 
+                                        Each individual boid follows three rules which it uses to steer itself: avoidance, alignment, and coherence.
+                                        Each boid also has a set position, velocity, direction, and 'area of influence'. <br><br> 
+                                        For avoidance, each boid checks the boids in its area of influence and steers away from their direct location.
+                                        For alignement, the boids velocity is set to the average velocity of each boid in this area of influence.
+                                        For coherence, each boids direction is steered towards the average direction of each boid in its area of influence.</span>
+
+            </div>
+            <div class="column3">
+
+            </div>
+
+        </div>
+
+</body>
+</html>
