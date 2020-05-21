@@ -51,13 +51,32 @@ function setup() {
   pixelDensity(1);
   
   check1 = getRandomInt(1, 11);
-  check2 = getRandomInt(1, 8);
-  check3 = getRandomInt(1, 11);
-  check4 = getRandomInt(1, 8);
-  
+  check2 = getRandomInt(2, 8);
+  check3 = getRandomInt(2, 11);
+  check4 = getRandomInt(2, 8);
+
+
   
   a1 = check1 * PI / check2;
+  console.log(a1);
   a2 = check3 * PI / check4;
+  console.log(a2);
+
+  //Dumb fix but it works
+  //Should just make array of usuable values
+  //Prevents pendulum from starting straight up or straight down
+  if (((a1 && a2) > 6.2) && ((a1 && a2) < 6.3)){
+      a1 = 4;
+      a2 = 5;
+      console.log("poop");
+  }
+  if (((a1 && a2) > 3.1) && ((a1 && a2) < 3.2)){
+    a1 = 9;
+    a2 = 2;
+    console.log("djkawndkawdnb");
+    
+}
+
   cx = width / 2;
   cy = 300;
   
