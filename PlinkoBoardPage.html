@@ -3,22 +3,32 @@
 <html lang="en" xmlns="https://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <title>Kevin Costello</title>
     <link rel="stylesheet" href="StyleSheet.css">
+    <script src="http://threejs.org/build/three.min.js"></script>
+    <script src="./scripts/orbit_controls.js"></script>
+
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js"></script>
-    <script src="Scripts/DoublePendulum.js" type="text/javascript"></script>
 </head>
 <body>
+    <style>
+        canvas {
+            position: absolute;
+            left: 60%;
+	        top: 8%;
+
+        }
+    </style>
+ 
     
     <div id="app3">
         <div class="row2" id="rowcontent">
             <div class="column3" id="textcontent">
                 
                 <br><br><br><br><br><br>
-                <h1 class="head">Double Pendulum</h1>
-                <span class="sub">P5 Javascript</span></br>
+                <h1 class="head">Plinko Board</h1>
+                <span class="sub">Three JS</span></br>
                 <br><br>
                 <span id="description">One of my first attempts at exploring kinematics. <br><br>Double pendulums exhibit a strong chaotic behaviour due to their high 
                                        sensitivity of initial conditions and thus pose as a great visual representation when researching Chaos Theory.<br><br>For the Double Pendulum 
@@ -31,8 +41,7 @@
 
             </div>
             <div class="column3">
-                
-
+                <script src="./scripts/Plinko.js"></script>
             </div>
 
     </div>

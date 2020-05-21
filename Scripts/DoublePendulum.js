@@ -57,21 +57,9 @@ function setup() {
 
 
   
-  a1 = check1 * PI / check2;
-  a2 = check3 * PI / check4;
-
-  //Dumb fix but it works
-  //Should just make array of usuable values
-  //Prevents pendulum from starting straight up or straight down
-  if (((a1 && a2) > 6.2) && ((a1 && a2) < 6.3)){
-      a1 = 4;
-      a2 = 5;
-  }
-
-  if (((a1 && a2) > 3.1) && ((a1 && a2) < 3.2)){
-    a1 = 9;
-    a2 = 2;
-  }
+  // floor prevents pendulum from starting straight up or straight down
+  a1 = Math.floor(check1 * PI / check2);
+  a2 = Math.floor(check3 * PI / check4);
 
   cx = width / 2;
   cy = 300;
