@@ -79,6 +79,9 @@ a{
 
 #wrapper3{
 	text-align: left;
+    align-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #description{
@@ -153,16 +156,29 @@ a{
 	display: table;
 	clear: both;
   }
+.container {
+    display: flex; // Flexbox layout
+    flex-wrap: wrap; // Allow wrapping
+    gap: 1rem; // Add some space between columns
+}
 
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 650px) {
-	.column {
-		width: 100%;
-	}
-	.gamecolumn{
-		width:100%;
-	}
-  }
+.column {
+  flex: 1; // Columns will take equal width
+  min-width: 300px; // Ensure columns don’t get too narrow
+}
+
+@media (max-width: 768px) { // Target screens narrower than 768px
+    .container {
+        align-content: center;
+        flex-direction: column; // Stack columns vertically
+    }
+    #wrapper2 {
+        text-align: center;
+        margin-left: 0%;
+    }
+}
+
+
 
 .sub {
 	color: #64dcdc;
@@ -186,24 +202,42 @@ a{
 }
 
 .active {
+    display: inline;
 	margin-top: 1rem;
 	opacity:0;
+    @media (max-width: 768px) {
+        display: none;
+        opacity: 0; 
+    }
 }
 
 .active:hover {
+    display: inline;
 	margin-top: 1rem;
 	opacity: 100;
+    
+   @media (max-width: 768px) {   
+        display: none;
+        opacity: 0;        
+    }
 }
 .static {
 	margin-top: 1rem;
 	width: 32px;
 	position:absolute;
-	z-index: -1;
+    z-index: -1;
+    @media (max-width: 768px) {   
+        position: static;
+    }
   }
   
   .static:hover {
 	margin-top: 1rem;
 	opacity:0;
+    @media (max-width: 768px) {   
+        position: static;
+        opacity: 1;
+    }
   }
 
  .avatar {
