@@ -75,7 +75,13 @@ a{
 #wrapper2{
 	margin-left: 15%;
 	text-align: left;
-  }
+    
+    @media  (max-width: 768px) { // Target screens narrower than 768px
+        text-align: center;
+        margin-left: 0%;
+
+    }
+}
 
 #wrapper3{
 	text-align: left;
@@ -106,31 +112,31 @@ a{
 
 /* Create two equal columns that floats next to each other */
 .column {
-	float: left;
 	width: 50%;
 	padding: 0px;
 	text-align: center;
 }
 
 .column2 {
-	float: left;
 	width: 50%;
 	padding: 0px;
 	text-align: left;
 }
 
 .column3{
-	float: left;
 	width: 33%;
 	padding: 0px;
 	text-align: left;
 }
 
 .gamecolumn {
-	float:left;
-	width:33%;
+	width: 33%;
 	padding: 3%;
 	text-align: center;
+    
+    @media (max-width: 768px) {
+        width: 100%;
+    }
 }
   
 .row{
@@ -160,6 +166,14 @@ a{
     display: flex; // Flexbox layout
     flex-wrap: wrap; // Allow wrapping
     gap: 1rem; // Add some space between columns
+    align-content: center;
+    flex-direction: column;
+    
+    @media (min-width: 768px) {
+            align-content: center;
+            flex-direction: row;
+    }
+
 }
 
 .column {
@@ -167,16 +181,7 @@ a{
   min-width: 300px; // Ensure columns don’t get too narrow
 }
 
-@media (max-width: 768px) { // Target screens narrower than 768px
-    .container {
-        align-content: center;
-        flex-direction: column; // Stack columns vertically
-    }
-    #wrapper2 {
-        text-align: center;
-        margin-left: 0%;
-    }
-}
+
 
 
 
