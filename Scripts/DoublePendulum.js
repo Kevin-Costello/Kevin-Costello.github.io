@@ -44,10 +44,12 @@ function sizeCanvas() {
 }
 
 function setup() {
+    
+
   colorMode(RGB, 255, 255, 255, 1);
   cnv = createCanvas(550, 600);
-  centerCanvas();
-  
+  cnv.parent("canvasHolder");
+  //centerCanvas();
   pixelDensity(1);
   
   check1 = getRandomInt(1, 11);
@@ -147,5 +149,5 @@ function getRandomInt(min, max) {
 }
 
 function windowResized() {
-  centerCanvas();
+  //centerCanvas();
 }
