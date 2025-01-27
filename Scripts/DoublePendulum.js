@@ -52,17 +52,11 @@ function setup() {
   //centerCanvas();
   pixelDensity(1);
   
-  check1 = getRandomInt(1, 11);
-  check2 = getRandomInt(2, 8);
-  check3 = getRandomInt(2, 11);
-  check4 = getRandomInt(2, 8);
 
-
-  
-  // floor prevents pendulum from starting straight up or straight down
-  a1 = Math.floor(check1 * PI / check2);
-  a2 = Math.floor(check3 * PI / check4);
-
+  // Assign initial angles. First angle shouldnt be between 0-30 or 330-360 so we can get some decent swing each iteration.
+  a1 = random(PI / 6, (11 * PI) / 6);
+  a2 - random(0.01, PI - 0.001);
+    
   cx = width / 2;
   cy = 300;
   
@@ -120,14 +114,14 @@ function draw() {
   fill(colors[0]);
   ellipse(x2, y2, m2, m2);
 
-  a1_v += a1_a;
-  a2_v += a2_a;
+  a1_v += a1_a ;
+  a2_v += a2_a ;
 
-  a1_v *= 0.999;
-  a2_v *= 0.999;
+  a1_v *= 0.998;
+  a2_v *= 0.998;
 
-  a1 += a1_v;
-  a2 += a2_v;
+  a1 += a1_v ;
+  a2 += a2_v ;
  
 
   buffer.stroke(0);

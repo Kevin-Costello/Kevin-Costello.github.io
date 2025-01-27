@@ -15,14 +15,15 @@
     <div id="app2">
         <div class="container">
             <div class="column" id="wrapper">
-                
-                <h1 class="head">Dynamic Ocean</h1>
-                <span class="sub">Unity Engine</span></br><br><br>
-                <span id="description">Inspired by Assassins Creed: Black Flag, this is my attempt at recreating the ocean and ship physics used in the game. 
-                    
-                                       <br><br>I started out with creating a basic trangle based mesh in Unity. The script which handles this creates square tiles split into two trangles. The 
-                                       vertices of these triangles are indexed and their Y positions are manipulated with Perlin Noise.
-                 </span>
+                <div class="contentHolder">
+                    <h1 class="head">Dynamic Ocean</h1>
+                    <span class="sub">Unity Engine</span></br><br><br>
+                    <span id="description">Inspired by Assassins Creed: Black Flag, this is my attempt at recreating the ocean and ship physics used in the game. 
+
+                                           <br><br>I started out with creating a basic trangle based mesh in Unity. The script which handles this creates square tiles split into two trangles. The 
+                                           vertices of these triangles are indexed and their Y positions are manipulated with Perlin Noise.
+                     </span>
+                </div>
 
             </div>
             <div class="column" id="wrapper">
@@ -33,10 +34,12 @@
         </div>
         <div class="container">
             <div class="column" id="wrapper">
-                <span id="description">
-                                       <br>Once the mesh was working properly I started experimenting with some materials. In order to make an applied material visibile I had to first manually create UV's
-                                       for the mesh since they do not generate themselves automatically. The material I settled on creates a cool pixelated effect on the water by setting the UV's color to a blue gradient. The color value on the gradient is determined by the UV's current Y position in order to have UV's get darker or lighter the lower or higher they are. The striped effect is created by clamping the color value at set intervals. This interval can be easily manipulated to either increase of decrease the amount of shades or 'stripes' of blue visible. 
-                </span>
+                <div class="contentHolder">
+                    <span id="description">
+                                           <br>Once the mesh was working properly I started experimenting with some materials. In order to make an applied material visibile I had to first manually create UV's
+                                           for the mesh since they do not generate themselves automatically. The material I settled on creates a cool pixelated effect on the water by setting the UV's color to a blue gradient. The color value on the gradient is determined by the UV's current Y position in order to have UV's get darker or lighter the lower or higher they are. The striped effect is created by clamping the color value at set intervals. This interval can be easily manipulated to either increase of decrease the amount of shades or 'stripes' of blue visible. 
+                    </span>
+                </div>
             </div>
             <div class="column" id="wrapper">
                 
@@ -47,10 +50,12 @@
         </div>
         <div class="container">
             <div class="column" id="wrapper">
-                <span id="description">
-                                       I then modeled a low-poly boat in Blender and imported it into the scene. Similar to how the ships in Assassins Creed: Black Flag function, I gave the ship 'float points' 
-                                       which compare their Y position to the height of the waves. If the float point is ever below a wave, the ship tilts up, and if the float point is ever above a wave, the ship tilts down. The averaged distance between these 'float points' serves as the center of gravity of ship and it is from this point that any rotations and translations are made. This particular mechanic needs a lot of tweaking in order to get the bobbing looking just right and after future additions will almost certainly require a revisit.
-                </span>
+                <div class="contentHolder">
+                    <span id="description">
+                                           I then modeled a low-poly boat in Blender and imported it into the scene. Similar to how the ships in Assassins Creed: Black Flag function, I gave the ship 'float points' 
+                                           which compare their Y position to the height of the waves. If the float point is ever below a wave, the ship tilts up, and if the float point is ever above a wave, the ship tilts down. The averaged distance between these 'float points' serves as the center of gravity of ship and it is from this point that any rotations and translations are made. This particular mechanic needs a lot of tweaking in order to get the bobbing looking just right and after future additions will almost certainly require a revisit.
+                    </span>
+                </div>
             </div>
             <div class="column" id="wrapper">
                 
@@ -61,16 +66,19 @@
         </div>
         <div class="container">
             <div class="column" id="wrapper">
-                <span id="description">
-                                       The next step was to then integrate some controls so a player could interact with this new environment. I gave the boat an acceleration and turn speed value 
-                                       that operates with a dampening factor in order to give the boat some inertia and a feeling of weight. I also incorporated a temporary camera which follows the boat and allows the user to rotate their view around the ship when holding left-click and moving the mouse. Sailing around became boring quite quickly so I decided to model a crate in Blender give it a 'float point' and created a particle effect that instantiates when the player gets close to it. In addition to the crate, I also modeled some boulders which I scattered about the scene to act as
-                                       obstacles for the player.
-                </span>
+                <div class="contentHolder">
+                    <span id="description">
+                                           The next step was to then integrate some controls so a player could interact with this new environment. I gave the boat an acceleration and turn speed value 
+                                           that operates with a dampening factor in order to give the boat some inertia and a feeling of weight. I also incorporated a temporary camera which follows the boat and allows the user to rotate their view around the ship when holding left-click and moving the mouse. Sailing around became boring quite quickly so I decided to model a crate in Blender give it a 'float point' and created a particle effect that instantiates when the player gets close to it. In addition to the crate, I also modeled some boulders which I scattered about the scene to act as
+                                           obstacles for the player.
+                    </span>
+                </div>
             </div>
             <div class="column" id="wrapper">
                 
                 <img src="Pictures/moveandcollect.gif" style="width:80%;height:80%;"><br>
                 <span id="description">Integrated Movement, Camera Control and Collectables</span>
+                </br></br></br></br></br>
 
             </div>
         </div>

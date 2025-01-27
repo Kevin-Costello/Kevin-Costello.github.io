@@ -55,13 +55,12 @@ a{
 }
 
 #app2 {
-	height: 100vh;
+	height: auto; /* Automatically expand if content requires more space */
 	width: 100%;
 	margin-top: 100px;
 
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
 	align-items: center;
 
 	z-index: 1;
@@ -85,7 +84,8 @@ a{
 #wrapper2{
 	margin-left: 15%;
 	text-align: left;
-    
+
+    height: auto; /* Automatically expand if content requires more space */
     @media  (max-width: 768px) { // Target screens narrower than 768px
         text-align: center;
         margin-left: 0%;
@@ -100,6 +100,12 @@ a{
     margin-right: 10px;
 }
 
+#wrapper4{
+	text-align: left;
+    align-content: center;
+    width: 50%;
+}
+
 #description{
 	text-align:left;
 	color: lightgray;
@@ -112,8 +118,9 @@ a{
 
 #textcontent{
 	margin-left: 75px;
+    text-align: left;
     @media (max-width: 768px) {
-        margin-left: 0px;
+        margin-left: 30px;
     }
 }
 
@@ -127,14 +134,18 @@ a{
 	align-items: left;
 
 	z-index: 1;
+     @media (max-width: 768px) {
+        margin-left: 0px;
+    }
 }
-
 
 /* Create two equal columns that floats next to each other */
 .column {
 	width: 50%;
 	padding: 0px;
 	text-align: center;
+    flex: 1; // Columns will take equal width
+    min-width: 300px; // Ensure columns don’t get too narrow
         @media (max-width: 768px) {
         width: 80%;
     }
@@ -157,6 +168,22 @@ a{
     }
 }
 
+
+#canvasHolder {
+    margin-top: 50px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    align-content: center;
+    text-align: center;
+    @media (max-width: 768px) {
+        margin-top: 20px;
+        width: 100%;
+        padding-bottom: 100px;
+    }
+}
 .gamecolumn {
 	width: 33%;
 	padding: 3%;
@@ -168,6 +195,9 @@ a{
 }
   
 .row{
+    min-height: 100vh; /* Minimum of full viewport height */
+    height: auto; /* Automatically expand if content requires more space */
+    overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -196,22 +226,21 @@ a{
     gap: 1rem; // Add some space between columns
     align-content: center;
     flex-direction: column;
-    
+
     @media (min-width: 768px) {
             align-content: center;
             flex-direction: row;
+            padding-bottom: 50px;
     }
 
 }
 
-.column {
-  flex: 1; // Columns will take equal width
-  min-width: 300px; // Ensure columns don’t get too narrow
+
+.contentHolder {
+    padding-left: 10%;
+    width: 80%;
+    text-align: left;
 }
-
-
-
-
 
 .sub {
 	color: #64dcdc;
