@@ -30,7 +30,7 @@ var ballGeom = new THREE.SphereGeometry(sphRad, 16, 16);
 var ballMaterial = new THREE.MeshPhongMaterial( {color: 0x999999, reflectivity: 1, shininess: 30, shading: THREE.SmoothShading} );
 var woodTexture = new THREE.TextureLoader()
 woodTexture.crossOrigin = null;
-woodTexture = woodTexture.load( "./Pictures/wood.jpg" );
+woodTexture = woodTexture.load( "../Pictures/wood.jpg" );
 var woodMaterial = new THREE.MeshBasicMaterial( { map: woodTexture} );
 
 var shiftedRight = true;
