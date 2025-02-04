@@ -7,7 +7,8 @@ var renderer = new THREE.WebGLRenderer();
 
 renderer.setSize(600, 750);
 renderer.setClearColor(0x008080, 1);
-document.body.appendChild(renderer.domElement);
+const div = document.getElementById("canvasHolder");
+div.appendChild(renderer.domElement);
 
 
 controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -28,7 +29,7 @@ var slotGeom = new THREE.BoxGeometry(.2, 1, 3);
 var slotMaterial = new THREE.MeshPhongMaterial( {color: 0x999999, reflectivity: 1, shininess: 30, shading: THREE.SmoothShading} );
 var ballGeom = new THREE.SphereGeometry(sphRad, 16, 16);
 var ballMaterial = new THREE.MeshPhongMaterial( {color: 0x999999, reflectivity: 1, shininess: 30, shading: THREE.SmoothShading} );
-var woodTexture = new THREE.TextureLoader()
+var woodTexture = new THREE.TextureLoader();
 woodTexture.crossOrigin = null;
 woodTexture = woodTexture.load( "../Pictures/wood.jpg" );
 var woodMaterial = new THREE.MeshBasicMaterial( { map: woodTexture} );

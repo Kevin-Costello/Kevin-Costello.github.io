@@ -20,9 +20,7 @@ function centerCanvas() {
 
 function setup() {
   cnv = createCanvas(640, 560);
-  centerCanvas();
-  createP("Drag the mouse to generate new boids.");
-
+  cnv.parent("canvasHolder");
 
   flock = new Flock();
   // Add an initial set of boids into the system

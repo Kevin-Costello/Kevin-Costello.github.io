@@ -3,19 +3,18 @@
 <html lang="en" xmlns="https://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kevin Costello</title>
     <link rel="stylesheet" href="../StyleSheet.css">
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js"></script>
-    <script src="../Scripts/FlockSketch.js"></script>
-    <script src="../Scripts/Boid.js"></script>
    
 </head>
 <body>
     
     <div id="app3">
-        <div class="row2" id="rowcontent">
+        <div class="container">
             <div class="column3" id="textcontent">
                 
                 <br><br><br><br> 
@@ -30,8 +29,9 @@
                                         For coherence, each boids direction is steered towards the average direction of each boid in its area of influence.</span>
 
             </div>
-            <div class="column3">
-
+            <div class="column3" id="canvasHolder">
+                <script src="../Scripts/FlockSketch.js"></script>
+                <script src="../Scripts/Boid.js"></script>
             </div>
 
         </div>
