@@ -179,7 +179,8 @@ function updateTimelineTicks(totalsArray, contextName) {
 }
 
 const tooltip = d3.select("body").append("div")
-    .attr("id", "tooltip");
+    .attr("id", "tooltip")
+    .style("pointer-events", "none");
 
 // --- Draw Subway Lines ----
 d3.json("final_d3_subway_data4.geojson").then(subwayData => {
@@ -477,6 +478,12 @@ function updateMapByHour(hourIndex, animate = true) {
             .transition()
             .duration(animate ? 1200 : 400)
             .attr("stroke", d => stationHeatScale(d.ridership[state.currentHour]));
+
+        d3.selectAll(".station-bar")
+            .transition()
+            .duration(animate ? 1200 : 50)
+            .attr("width", d => state.barXScale(d.ridership[state.currentHour] || 0))
+            .attr("fill", d => stationHeatScale(d.ridership[state.currentHour] || 0));
     }
 }
 
@@ -493,14 +500,14 @@ function renderScene1(weeklyRidership) {
         .attr("stroke", d => getLineColor(d.properties.service));
            
     sidebar.html(`
-        <div class="panel-title">The Lifeline of NYC</div>
+        <div class="panel-title">NYC at its Busiest</div>
         <div class="panel-body">Operating 24/7 across 472 stations, the NYC subway is the largest rapid transit system in the world by number of stations.</div>
         <!-- <div class="panel-body">It serves a metropolitan population of over 20 million people, acting as the circulatory system for the local economy.</div> --!>
         <div class ="panel-body">From 9/8/2025 to 9/14/2025, the subway system experienced its busiest week in its <strong>121</strong> years of service.</div>
         <div class="panel-stat" id="animated-stat">0</div>
         <div class="panel-label">Total System-Wide Riders</div>
         
-        <div class="panel-body" style="font-size: 13px; color: #666; margin-top: auto; border-top: 1px solid #333; padding-top: 20px;">
+        <div class="panel-body" style="font-size: 13px; color: #666; margin-top: auto; border-top: 1px solid #333; padding-top: 10px;">
             <strong>Interaction:</strong> Hover over any subway line on the map to identify the route.
         </div>
         
@@ -528,8 +535,13 @@ function renderScene1(weeklyRidership) {
 function renderScene2() {
     state.scene = 2;
     const segLayer = d3.select("#segment-layer");
+    
     segLayer.selectAll("*").interrupt(); 
     segLayer.selectAll("*").remove();
+
+    // Collapse right panel if going back to Scene 2
+    d3.select("#right-panel").style("width", "0px");
+    d3.select("#bar-chart-container").selectAll("*").remove();
 
     // Restore full opacity and base widths to all subway lines
     d3.selectAll(".subway-path")
@@ -538,30 +550,44 @@ function renderScene2() {
         .attr("stroke-opacity", 1)
         .attr("stroke-width", 3);
 
+    const systemPeakVolume = d3.max(systemHourlyTotals) || 0;
+    const systemQuietVolume = d3.min(systemHourlyTotals) || 0;
+    const volumeMultiplier = systemQuietVolume > 0 
+        ? (systemPeakVolume / systemQuietVolume).toFixed(1) + "x" 
+        : "drastically";
+
     const sidebar = d3.select("#sidebar");
     
-    sidebar.html(`
+sidebar.html(`
         <div class="panel-title">Dynamic Line Usage</div>
-        <div class="panel-body">
-            By transitioning from standard MTA branding to a density heatmap, we can instantly identify the heaviest usage of the network throughout each day of the week.
+        <div class="panel-body" style="font-size: 13px; line-height: 1.4; margin-bottom: 4px;">
+            By transitioning from standard MTA branding to a density heatmap, we can instantly identify the heaviest usage of the network.
         </div>
 
-        <div class="panel-body" style="margin-top: 24px;">
-            <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                <span style="display: inline-block; width: 14px; height: 14px; background-color: #e74c3c; border-radius: 50%; margin-right: 10px;"></span>
-                <span">High Volume (Max Traffic)</span>
+        <div style="margin: 12px 0; padding: 10px; background-color: #1a1a1a; border-left: 3px solid #e74c3c; font-size: 12px; color: #ddd;">
+            <strong>The Rhythm of the City</strong><br>
+            Notice how the network pulses with the time of day. System-wide traffic surges to a peak of <strong>${d3.format(",")(systemPeakVolume)}</strong> riders during rush hour, before plummeting to just <strong>${d3.format(",")(systemQuietVolume)}</strong> riders in the dead of night. 
+            <div style="margin-top: 6px;">
+                At its busiest, the subway carries <strong>${volumeMultiplier} more people</strong> than at its quietest. Scrub the timeline below to watch the commuter traffic ebb and flow.
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 8px;"></span>
+                <span style="font-size: 12px;">High Volume (Max Traffic)</span>
             </div>
             <div style="display: flex; align-items: center;">
-                <span style="display: inline-block; width: 14px; height: 14px; background-color: #2ecc71; border-radius: 50%; margin-right: 10px;"></span>
-                <span">Low Volume Routes</span>
+                <span style="display: inline-block; width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 8px;"></span>
+                <span style="font-size: 12px;">Low Volume Routes</span>
             </div>
         </div>
 
-        <div class="panel-body" style="font-size: 13px; color: #666; margin-top: auto; border-top: 1px solid #333; padding-top: 20px;">
-            <strong>Interaction:</strong> Hover over a line to see exactly how many riders it supports each hour.
+        <div class="panel-body" style="font-size: 13px; color: #666; margin-top: auto; border-top: 1px solid #333; padding-top: 10px;">
+            <strong>Interaction:</strong> Hover for hourly stats, or click a line to analyze individual stations.
         </div>
-        <button class="scene-btn" id="btn-scene-1">&#8592 Back</button>
         
+        <button class="scene-btn" id="btn-scene-1" style="margin-top: 0;">&#8592 Back</button>
     `);
     // Restore the timeline ticks to the global system totals
     updateTimelineTicks(systemHourlyTotals, "System");
@@ -584,23 +610,28 @@ function renderScene2() {
     d3.select("#marker-line-min").style("display", "block");
     d3.select("#tick-line-min").style("display", "block");
     // Force the map to immediately draw Hour 0
-    updateMapByHour(0);
+    updateMapByHour(state.currentHour);
 
     // Attach the event listener to the slider
     d3.select("#timeSlider").on("input", function() {
         updateMapByHour(this.value, false);
     });
+    
 
     d3.select("#btn-scene-1").on("click", renderScene1);
 
     d3.select("#bottom-timeline").style("display", "block");
     d3.select("#time-display").style("display", "block"); 
+
+    
     
 }
 
 function renderScene3(selectedTrainLetter, routeData) {
 state.scene = 3;
-    state.selectedLine = selectedTrainLetter;
+
+    d3.select("#bar-chart-container").selectAll("*").remove();
+    d3.select("#right-panel").style("width", "350px");
 
     // Clear any existing segments before drawing new ones
     segmentLayer.selectAll(".heat-segment").remove();
@@ -610,6 +641,9 @@ state.scene = 3;
     let peakStationName = "";
     let peakStationHourIndex = 0;
     const stations = routeData.properties.stations || [];
+
+    const lineTotal = routeData.properties.lineTotal || 0;
+    const systemPercentage = ((lineTotal / systemTotalRiders) * 100).toFixed(1);
     
     stations.forEach(station => {
         if (station.ridership) {
@@ -626,22 +660,94 @@ state.scene = 3;
     state.peakStationHourIndex = peakStationHourIndex;
 
     stationHeatScale.domain([0, currentLineMaxStationVolume || 1]);
+
+        const chartStations = [...stations].sort((a, b) => b.latitude - a.latitude);
+
+    // Bar Chart SVG dimensions
+    const barMargin = { top: 40, right: 30, bottom: 20, left: 110 };
+    const barWidth = 350 - barMargin.left - barMargin.right;
+    const barHeight = chartStations.length * 22; // 22px of vertical space per station
+    const barSvg = d3.select("#bar-chart-container")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", barHeight + barMargin.top + barMargin.bottom)
+        .append("g")
+        .attr("transform", `translate(${barMargin.left},${barMargin.top})`);
+
+    // Chart Scales
+    state.barXScale = d3.scaleLinear()
+        .domain([0, currentLineMaxStationVolume || 1])
+        .range([0, barWidth]);
+
+    const barYScale = d3.scaleBand()
+        .domain(chartStations.map(d => d.name))
+        .range([0, barHeight])
+        .padding(0.2);
+
+    // Chart Title
+    barSvg.append("text")
+        .attr("x", -barMargin.left + 15)
+        .attr("y", -15)
+        .style("fill", "#fff")
+        .style("font-size", "14px")
+        .style("font-weight", "bold")
+        .text("Station Volume (North to South)");
+
+    // Draw the Y-Axis
+    barSvg.append("g")
+        .call(d3.axisLeft(barYScale)
+            .tickSize(0)
+            // Truncate any station name longer than 15 characters
+            .tickFormat(name => name.length > 15 ? name.slice(0, 14) + "…" : name)
+        )
+        .selectAll("text")
+        .style("fill", "#aaa")
+        .style("font-size", "10px")
+        .style("text-anchor", "end")
+        .attr("dx", "-5px");
+        
+    // Remove the Y-axis line for a cleaner look
+    barSvg.select(".domain").remove();
+
+    // Draw the initial Bars
+    barSvg.selectAll(".station-bar")
+        .data(chartStations)
+        .join("rect")
+        .attr("class", "station-bar")
+        .attr("y", d => barYScale(d.name))
+        .attr("height", barYScale.bandwidth())
+        .attr("x", 0)
+        // Set initial width and color to the current hour on the slider
+        .attr("width", d => state.barXScale(d.ridership[state.currentHour] || 0))
+        .attr("fill", d => stationHeatScale(d.ridership[state.currentHour] || 0));
+    state.selectedLine = selectedTrainLetter;
+
+
     const sidebar = d3.select("#sidebar");
     sidebar.html(`
         <div class="panel-title">${selectedTrainLetter} Train Heatmap</div>
         <div class="panel-body">
             Station-to-station volume breakdown for the ${selectedTrainLetter} line.
-            <br><br>
-            <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                <span style="display: inline-block; width: 14px; height: 14px; background-color: #e74c3c; border-radius: 50%; margin-right: 10px;"></span>
-                <span">High Volume (Max Traffic)</span>
+            
+            <div style="margin-top: 15px; padding: 12px; background-color: #1a1a1a; border-left: 3px solid ${getLineColor(selectedTrainLetter)}; font-size: 13px;">
+                <strong>Infrastructure Load</strong><br>
+                This route moved <strong>${d3.format(",")(lineTotal)}</strong> riders over the course of the week. It single-handedly supports <strong>${systemPercentage}%</strong> of the entire transit network's total volume.
             </div>
-            <div style="display: flex; align-items: center;">
-                <span style="display: inline-block; width: 14px; height: 14px; background-color: #2ecc71; border-radius: 50%; margin-right: 10px;"></span>
-                <span">Low Volume Routes</span>
+            
+            <br>
+            <div class="panel-body">
+                <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                    <span style="display: inline-block; width: 12px; height: 12px; background-color: #e74c3c; border-radius: 50%; margin-right: 8px;"></span>
+                    <span style="font-size: 12px;">High Volume (Max Traffic)</span>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span style="display: inline-block; width: 12px; height: 12px; background-color: #2ecc71; border-radius: 50%; margin-right: 8px;"></span>
+                    <span style="font-size: 12px;">Low Volume Routes</span>
+                </div>
             </div>
+            <br>
             <span style="font-size: 12px; color: #aaa;">
-                Scale calibrated to peak station service: <strong>${d3.format(",")(currentLineMaxStationVolume)} riders</strong>
+                Peak Station: <strong>${peakStationName}</strong> (${d3.format(",")(currentLineMaxStationVolume)} riders)
             </span>
         </div>
         <button class="scene-btn" id="btn-scene-2">&#8592 Back to Network Heatmap</button>
@@ -680,7 +786,7 @@ state.scene = 3;
     const unvisited = [...(routeData.properties.stations || [])];
     const visited = [];
 
-if (unvisited.length > 0) {
+    if (unvisited.length > 0) {
         
         visited.push(unvisited.shift());
 
